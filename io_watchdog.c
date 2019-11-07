@@ -91,7 +91,7 @@ int main()
 	printf("Watch dog defalut Configuration Register:%02x\n", superio_inb(0x72));
 	//set configuartion
 	outb(0x72, REG);
-	outb(0xC0, VAL);//1100 0000
+	outb(0x90, VAL);//1001 0000
 	int cfg = superio_inb(0x72);
 	printf("Watch dog Configuration Register:%02x\n", cfg);
 
