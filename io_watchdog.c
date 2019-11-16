@@ -84,6 +84,12 @@ int main()
 	//select logic device
 	outb(LDNREG, REG);
 	outb(GPIOLND, VAL);
+	
+	//Q500G6 support
+	//8.10.21 SMI# Control Register 2 (Index=F1h, Default=00h)
+	//bit 2 This bit is to enable the generation of an SMI# due to WDT’s IRQ (EN_WDT).
+	//outb(0xf1, REG);
+	//outb(0x44, VAL);
 
 	int ctrl = superio_inb(0x71);
 	printf("Watch dog Control Register:%02x\n", ctrl);
