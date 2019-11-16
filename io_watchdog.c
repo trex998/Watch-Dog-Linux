@@ -91,8 +91,7 @@ int main()
 	//outb(0xf1, REG);
 	//outb(0x44, VAL);
 
-	int ctrl = superio_inb(0x71);
-	printf("Watch dog Control Register:%02x\n", ctrl);
+	printf("Watch dog Control Register:%02x\n", superio_inb(0x71));
 
 	printf("Watch dog defalut Configuration Register:%02x\n", superio_inb(0x72));
 	//set configuartion
@@ -101,8 +100,8 @@ int main()
 	int cfg = superio_inb(0x72);
 	printf("Watch dog Configuration Register:%02x\n", cfg);
 
-	int timeout = superio_inw(0x74, 0);
-	printf("Watch dog TIme-out default Value Register:%04x\n", timeout);
+
+	printf("Watch dog TIme-out default Value Register:%d\n", superio_inw(0x74, 0));
 	outb(0x73, REG);
 	outb(0x1e, VAL);//12c:300s 1e:30s  3c:60s
 	outb(0x74, REG);
@@ -112,16 +111,18 @@ int main()
 	usleep(20*1000000);
 
 	superio_enter();
-	int timeout2 = superio_inw(0x74, 0);
-	printf("Watch dog TIme-out2 Value Register:%04x\n", timeout2);
+	printf("Watch dog TIme-out2 Value Register:%d\n", superio_inw(0x74, 0));
 
-	feed_dog(50);//喂狗，并将重新设置为50s
-	int timeout3 = superio_inw(0x74, 0);
-	printf("Watch dog TIme-out3 Value Register:%04x\n", timeout3);
+	feed_dog(50);//feed dog，reset time-out to 50s
+	printf("Watch dog TIme-out3 Value Register:%d\n", superio_inw(0x74, 0));
 
-	//关闭喂狗
+	//Q300 disable watchdog
 	//outb(0x72, REG);
 	//outb(0x80, VAL);
+	
+	//Q500 disable watchdog
+	//outb(0xf1, REG);
+	//outb(0x40, VAL);
 
 	exit_superio();
 	
